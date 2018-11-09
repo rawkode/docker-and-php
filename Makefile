@@ -4,8 +4,11 @@ deps:
 rebuild:
 	@docker-compose build php
 
-dshell: rebuild
-	@docker-compose run --rm --service-ports php bash --norc
+dup:
+	@docker-compose up -d
+
+dshell: rebuild dup
+	@docker-compose exec php bash --norc
 
 dclean:
 	@docker-compose down --rmi=local --volumes
