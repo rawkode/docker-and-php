@@ -1,5 +1,15 @@
 version: '2.4'
 
+volumes:
+  cache: &tmpfsConfig
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  composer: *tmpfsConfig
+  logs: *tmpfsConfig
+  vendor: *tmpfsConfig
+
 services:
   php:
     build:
@@ -7,10 +17,11 @@ services:
       target: base
     user: "33"
     volumes:
-      - .:/app
-    tmpfs:
-      - /app/vendor:uid=33
-      - /composer:uid=33
+      - .:/app:ro
+      - cache:/app/var/cache
+      - composer:/composer
+      - logs:/app/var/log
+      - vendor:/app/vendor
 
   nginx:
     image: nginx
