@@ -1,0 +1,13 @@
+version: '2.4'
+
+services:
+  php:
+    build:
+      context: .
+      target: base
+    user: "33"
+    volumes:
+      - .:/app
+    tmpfs:
+      - /app/vendor:uid=33
+      - /composer:uid=33
