@@ -14,6 +14,7 @@ FROM base AS build
 
 # Now install dev dependencies
 COPY composer.json /app/
+COPY composer.lock /app/
 RUN composer install
 
 FROM build AS unit-test
